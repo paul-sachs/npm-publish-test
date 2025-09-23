@@ -1,5 +1,5 @@
 {
-  "name": "npm-test-package",
+  "name": "@psachs-buf/npm-test-package",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
