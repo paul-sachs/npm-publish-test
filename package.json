@@ -1,6 +1,6 @@
 {
   "name": "@psachs-buf/npm-test-package",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "index.js",
   "repository": {
     "url": "https://github.com/paul-sachs/npm-publish-test"
