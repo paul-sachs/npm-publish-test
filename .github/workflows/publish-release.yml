@@ -19,12 +19,6 @@ jobs:
       issues: write
 
     steps:
-      - name: Get current workspace version
-        id: workspace_version
-        run: |
-          VERSION=$(npm run getversion --silent)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Checkout base branch
         uses: actions/checkout@v4
         with:
@@ -39,6 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Get current workspace version
+        id: workspace_version
+        run: |
+          VERSION=$(npm run getversion --silent)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get updated release notes from PR
         id: pr_notes
