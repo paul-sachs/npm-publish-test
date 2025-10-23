@@ -56,7 +56,8 @@ jobs:
       - name: Publish GitHub release
         run: |
           gh release create v${{ steps.workspace_version.outputs.version }} \
-            --notes "${{ steps.pr_notes.outputs.notes }}" \
-            --discussion-category "Announcements"
+            --title "Release v${{ steps.workspace_version.outputs.version }}" \
+            --notes "${{ steps.pr_notes.outputs.notes }}"
+        # --discussion-category "Announcements" ## Enable if discussions are enabled
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
