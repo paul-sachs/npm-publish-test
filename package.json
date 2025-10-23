@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"Build completed\"",
     "setversion": "npm version --no-git-tag-version",
+    "getversion": "node get-version.js",
     "release": "npm publish"
   },
   "keywords": [],
