@@ -1,3 +1,3 @@
 module.exports = {
-  hello: () => "Hello, World!"
+  hello: () => "Hello, World! NOW!"
 };
