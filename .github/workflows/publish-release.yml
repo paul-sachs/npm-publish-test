@@ -22,7 +22,7 @@ jobs:
       - name: Get current workspace version
         id: workspace_version
         run: |
-          VERSION=$(npm run getversion)
+          VERSION=$(npm run getversion --silent)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout base branch

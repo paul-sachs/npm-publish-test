@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { readdirSync, readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { readFile, glob } from "node:fs/promises";
 
 /**
  * Retrieves the workspace version from the package directory.
@@ -21,27 +20,22 @@ import { join } from "node:path";
  * @param {string} packagesDir
  * @returns {string}
  */
-export function findWorkspaceVersion(packagesDir) {
+export async function findWorkspaceVersion(packagesDir) {
     let version = undefined;
-    for (const entry of readdirSync(packagesDir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) {
-        continue;
-      }
-      const path = join(packagesDir, entry.name, "package.json");
-      if (existsSync(path)) {
-        const pkg = JSON.parse(readFileSync(path, "utf-8"));
+    for await (const path of glob(packagesDir + '/**/package.json')) {
+        const pkg = JSON.parse(await readFile(path, "utf-8"));
         if (pkg.private === true) {
-          continue;
+            continue;
         }
         if (!pkg.version) {
-          throw new Error(`${path} is missing "version"`);
+            throw new Error(`${path} is missing "version"`);
         }
         if (version === undefined) {
-          version = pkg.version;
+            version = pkg.version;
         } else if (version !== pkg.version) {
-          throw new Error(`${path} has unexpected version ${pkg.version}`);
+            throw new Error(`${path} has unexpected version ${pkg.version}`);
         }
-      }
+
     }
     if (version === undefined) {
       throw new Error(`unable to find workspace version`);
@@ -49,4 +43,4 @@ export function findWorkspaceVersion(packagesDir) {
     return version;
   }
 
-process.stdout.write(`${findWorkspaceVersion(".")}\n`);
+process.stdout.write(`${await findWorkspaceVersion("./")}\n`);
