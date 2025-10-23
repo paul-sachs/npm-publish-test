@@ -73,6 +73,7 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               /repos/${{ github.repository }}/releases/generate-notes \
               -f 'tag_name=v${{ inputs.version }}' -f 'target_commitish=${{ inputs.base_branch }}' -f 'previous_tag_name=v${{ steps.workspace_version.outputs.version }}' \
+              --jq ".body" \
           )
           echo "notes<<EOF" >> $GITHUB_OUTPUT
           echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
